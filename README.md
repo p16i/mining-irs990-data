@@ -50,7 +50,8 @@ With `batch-size` at `100` documents, each invocation completes within `1` minut
 
 ## Result
 ```
-Loading 147356 items
+Loading 153451 documents
+only 147356 documents that can be computed YoY.
 Total national average YoY Revenue in 2013 : 34.639212920080034
 ---- Average YoY by State --
 NC : 318.60719422967225
