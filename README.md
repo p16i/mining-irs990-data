@@ -46,7 +46,7 @@ $ awk '{print}' data/success/* > irs900-data.txt
 $ scala compute-yoy.scala irs900-data.txt
 # output shown at `Result` section
 ```
-With `batch-size` at `100` documents, each invocation completes within `1` minutes. During job submission, `submit-job.py` pauses  `30s` at every `50` batches, this submission process takes around `23` minutes to complete. Once data is available on `s3`, collecting the intermediate results and computing YoY are rather fast. In total, the whole pipeline takes approximately `25` minutes.
+With `batch-size` at `100` documents, each invocation completes within `1` minute. During job submission, `submit-job.py` pauses  `30s` at every `50` batches, this submission process takes around `23` minutes to complete. Once data is available on `s3`, collecting the intermediate results and computing YoY are rather fast. In total, the whole pipeline takes approximately `25` minutes.
 
 ## Result
 ```
