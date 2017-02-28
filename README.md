@@ -35,7 +35,7 @@ Given this reasoning, the system has components as shown in the figure below.
     $ python submit-job.py index_2013.csv
     ```
 
-2. Each invocation executes `lambda-code.py` which extracts relevant attributes that it is given and saves the result to s3.
+2. Each invocation executes `lambda-code.py` which extracts relevant attributes such as `TotalRevenuePriorYear`, `TotalRevenueCurrentYear` and `State` for given documents and saves the result to s3.
 3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) command and processed as  follows :
 ```
 # copy files to local
