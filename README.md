@@ -47,6 +47,7 @@ Clearly, this process is time-consuming and dominate performance of the computat
 
 Given this reasoning, the system has components as shown in the figure below.
 ![](http://i.imgur.com/Sm6bzOd.png)
+
 1. A python script `submit-job.py` is created to build batches of documents. It hands each batch to a λ invocation and stop for sometimes after `k` batches to prevent exceeding concurrency limit of λ-service, [more info](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html).
 
     ```
