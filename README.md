@@ -26,6 +26,25 @@ $ cat index_2013.csv | grep -e '990,' -e '990O' | wc -l
 ```
 Clearly, this process is time-consuming and dominate performance of the computation pipeline. Thus, we need to do it in distributed setting to fasten the whole pipeline.
 
+
+1. This is a numbered list.
+2. I'm going to include a fenced code block as part of this bullet:
+
+    ```
+    Code
+    More Code
+    ```
+
+3. We can put fenced code blocks inside nested bullets, too.
+   1. Like this:
+
+        ```c
+        printf("Hello, World!");
+        ```
+
+   2. The key is to indent your fenced block by **(4 * bullet_indent_level)** spaces.
+   3. Also need to put a separating newline above and below the fenced block.
+
 Given this reasoning, the system has components as shown in the figure below.
 ![](http://i.imgur.com/Sm6bzOd.png)
 1. A python script `submit-job.py` is created to build batches of documents. It hands each batch to a λ invocation and stop for sometimes after `k` batches to prevent exceeding concurrency limit of λ-service, [more info](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html).
