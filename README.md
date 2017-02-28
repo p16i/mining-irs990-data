@@ -16,7 +16,7 @@ The data is split into yearly basis. For each year, it has an index file that co
 The form is served as `XML` document. It contains basic information of each organization, such as name, and state, and financial situation for that year. Details of the financial information are different for each variant of the form. The form has  5 variants, namely `990`, `990EO`, `990EZ`, `990O` and `990PF`. In this case, only `990` and `990O` are revelant to the questions as they have `TotalRevenuePriorYear` and `TotalRevenueCurrentYear`.
 
 ## System Overview
-One of the challenges here is retrieving and extracting relevant attributes from those documents. For `2013`, we have `137789` documents to be extracted.
+One of the challenges here is retrieving and extracting relevant attributes from those documents. For `2013`, we have `153560` documents to be extracted.
 ```
 # download the index file
 $ wget https://s3.amazonaws.com/irs-form-990/index_2013.csv
