@@ -1,7 +1,3 @@
-/**
-  * Created by heytitle on 2/26/17.
-  */
-
 import scala.io.Source
 
 case class DataTuple(val objectId : String, val name: String, val state: String, val pyRevenue : Long, val cyRevenue: Long ) {
@@ -32,14 +28,10 @@ object DataTuple {
 
 
 def main(): Unit ={
-  val filename="data/data-from-s3.txt"
-
+  val filename    = args(0)
   val revenueData = Source.fromFile(filename)
     .getLines
     .map( l => DataTuple(l) )
-//    .take(10)
-//    .filter( dt => dt != null )
-    //  .take(100)
     .filter(  c => c.pyRevenue > 0 & c.cyRevenue > 0 )
     .toList
 
@@ -47,22 +39,20 @@ def main(): Unit ={
 
   val yoyRevenue = revenueData.map{ c => (c.state, c.computeYoY()) }
 
-
   val totalYoYRevenue = yoyRevenue.map(_._2).sum / yoyRevenue.length
   val states = yoyRevenue
     .groupBy(_._1)
     .map{ st => (st._1, st._2.map(_._2).sum / st._2.length ) }
     .toList
-    .sortBy(- _._2) // reverse order
+    .sortBy(- _._2) // order in descending order
     .map{ st =>
     st._1 + " : " + st._2
   }
 
 
   println(s"Total national average YoY Revenue in 2013 : $totalYoYRevenue")
-  println("---- Average by State --")
+  println("---- Average YoY by State --")
   println(states.mkString("\n"))
 }
 
 main()
-
