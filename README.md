@@ -30,10 +30,9 @@ Given this reasoning, the system has components as shown in the figure below.
 ![](http://i.imgur.com/Sm6bzOd.png)
 1. A python script `submit-job.py` is created to build batches of documents. It hands each batch to a λ invocation and stop for sometimes after `k` batches to prevent exceeding concurrency limit of λ-service, [more info](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html).
 
-     ```
-     $ python submit-job.py index_2013.csv
-     ```
-     
+    ```
+    $ python submit-job.py index_2013.csv
+    ```
 2. Each invocation executes `lambda-code.py` which extracts relevant attributes that it is given and saves the result to s3.
 3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) comand processed as  follows :
 ```
