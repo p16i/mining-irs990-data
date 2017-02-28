@@ -36,7 +36,7 @@ Given this reasoning, the system has components as shown in the figure below.
     ```
 
 2. Each invocation executes `lambda-code.py` which extracts relevant attributes that it is given and saves the result to s3.
-3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) comand processed as  follows :
+3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) command and processed as  follows :
 ```
 # copy files to local
 $ aws s3 cp s3://irs900-collection data --recursive
