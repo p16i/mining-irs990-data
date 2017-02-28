@@ -63,9 +63,8 @@ def process(filename):
         total_batches = int(ceil(len(document_ids)*1.0/BATCH_SIZE))
         super_steps   = int(ceil(total_batches*1.0/PAUSE_STEP))
 
-        print("We have %s batches and %d super_steps, approximately %2.2f seconds to complete"
-              % ( total_batches, super_steps, super_steps*(15) + 1 )
-                 # each super step ~ 15 seconds, each 1 invocation ~ 1 sec
+        print("We have %s batches and %d super_steps"
+              % ( total_batches, super_steps )
         )
 
         partial_process_batch = partial(process_batch, document_ids = document_ids, total_batches = total_batches)

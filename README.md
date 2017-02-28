@@ -43,7 +43,7 @@ $ cat data/success/* > irs900-data.txt
 $ scala compute-yoy.scala irs900-data.txt
 # output shown at `Result` section
 ```
-With `batch-size` at `100` documents per invocation, pausing `30s` for every `50` batches, extracting process takes around `8` minutes. Once data is available in one place, computing YoY is rather fast around `2s`. In total, the whole pipeline takes approximately `10` minutes.
+With `batch-size` at `100` documents, each invocation completes within `1` minutes. During job submission, `submit-job.py` pauses  `30s` at every `50` batches, this submission process takes around `8` minutes to complete. Once data is available on `s3`, collecting the intermediate results and computing YoY are rather fast. The computation part takes around `2s`. In total, the whole pipeline takes approximately `10` minutes.
 
 ## Result
 ```
@@ -106,3 +106,6 @@ VI : 0.1553190281297597
 PR : 0.029806059394842228
 ```
 
+# Improvements
+1. Parallel invoke lambda service to reduce job submission time.
+2. Running-time of each invocation can be reduced using same technique.
