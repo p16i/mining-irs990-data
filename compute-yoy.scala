@@ -32,16 +32,18 @@ object DataTuple {
 
 
 def main(): Unit ={
-  val filename="data/revenue2013-completed.txt"
+  val filename="data/data-from-s3.txt"
 
   val revenueData = Source.fromFile(filename)
     .getLines
     .map( l => DataTuple(l) )
-    .take(10)
-    .filter( dt => dt != null )
+//    .take(10)
+//    .filter( dt => dt != null )
     //  .take(100)
-    .filter( _.pyRevenue > 0 )
+    .filter(  c => c.pyRevenue > 0 & c.cyRevenue > 0 )
     .toList
+
+  println(s"Loading ${revenueData.length} items")
 
   val yoyRevenue = revenueData.map{ c => (c.state, c.computeYoY()) }
 
