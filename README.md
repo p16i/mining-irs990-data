@@ -16,7 +16,7 @@ The data is split into yearly basis. For each year, it has an index file that co
 The form is served as `XML` document. It contains basic information of each organization, such as name, and state, and financial situation for that year. Details of the financial information are different for each variant of the form. The form has  5 variants, namely `990`, `990EO`, `990EZ`, `990O` and `990PF`. In this case, only `990` and `990O` are revelant to the questions as they have `TotalRevenuePriorYear` and `TotalRevenueCurrentYear`.
 
 ## System Overview
-One of the challenges here is retrieving and extracting relevant attributes from those documents. For `2013`, we have `137789` documents to be extracted.
+One of the challenges here is retrieving and extracting relevant attributes from those documents. For `2013`, we have `153560` documents to be extracted.
 ```
 # download the index file
 $ wget https://s3.amazonaws.com/irs-form-990/index_2013.csv
@@ -28,12 +28,15 @@ Clearly, this process is time-consuming and dominate performance of the computat
 
 Given this reasoning, the system has components as shown in the figure below.
 ![](http://i.imgur.com/Sm6bzOd.png)
+
 1. A python script `submit-job.py` is created to build batches of documents. It hands each batch to a λ invocation and stop for sometimes after `k` batches to prevent exceeding concurrency limit of λ-service, [more info](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html).
-```
-$ python submit-job.py index_2013.csv
-```
-2. Each invocation executes `lambda-code.py` which extracts relevant attributes that it is given and saves the result to s3.
-3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) comand processed as  follows :
+
+    ```
+    $ python submit-job.py index_2013.csv
+    ```
+
+2. Each invocation executes `lambda-code.py` which extracts relevant attributes such as `TotalRevenuePriorYear`, `TotalRevenueCurrentYear` and `State` for given documents and saves the result to s3.
+3. Once everything is finished, the results from s3 are retrieved by using [`aws-cli`](https://aws.amazon.com/cli/) command and processed as  follows :
 ```
 # copy files to local
 $ aws s3 cp s3://irs900-collection data --recursive
@@ -43,11 +46,12 @@ $ awk '{print}' data/success/* > irs900-data.txt
 $ scala compute-yoy.scala irs900-data.txt
 # output shown at `Result` section
 ```
-With `batch-size` at `100` documents, each invocation completes within `1` minutes. During job submission, `submit-job.py` pauses  `30s` at every `50` batches, this submission process takes around `23` minutes to complete. Once data is available on `s3`, collecting the intermediate results and computing YoY are rather fast. In total, the whole pipeline takes approximately `25` minutes.
+With `batch-size` at `100` documents, each invocation completes within `1` minute. During job submission, `submit-job.py` pauses  `30s` at every `50` batches, this submission process takes around `23` minutes to complete. Once data is available on `s3`, collecting the intermediate results and computing YoY are rather fast. In total, the whole pipeline takes approximately `25` minutes.
 
 ## Result
 ```
-Loading 147356 items
+Loading 153451 documents
+only 147356 documents that can be computed YoY.
 Total national average YoY Revenue in 2013 : 34.639212920080034
 ---- Average YoY by State --
 NC : 318.60719422967225
