@@ -36,11 +36,18 @@ def send_data(object_ids, partition_id):
 
     return response
 
-def process_batch( i, lines, total_batches ) :
+def process_batch( i, document_ids, total_batches ) :
     start_idx = i*BATCH_SIZE
     end_idx   = (i+1)*BATCH_SIZE
-    response = send_data( lines[start_idx:end_idx], i )
+    response = send_data( document_ids[start_idx:end_idx], i )
     print('batch %d from %d : status %d ' % (i, total_batches, response['ResponseMetadata']['HTTPStatusCode']) )
+
+def is_revelant_form( line ):
+    data = line.split(',')
+
+    if data[6] in ['990', '990O']:
+        return True
+    return False
 
 def process(filename):
 
@@ -48,13 +55,15 @@ def process(filename):
         lines = f.readlines()
 
         # for debug proposes
-        # lines = lines[1:1000]
+        # lines = lines[1:2000]
 
-        total_batches = int(ceil(len(lines)*1.0/BATCH_SIZE))
+        revelant_forms = filter( is_revelant_form, lines[1:] )
+        document_ids   = map( lambda f: f.split(',')[-1].strip(), revelant_forms )
 
+        total_batches = int(ceil(len(document_ids)*1.0/BATCH_SIZE))
         super_steps   = int(ceil(total_batches*1.0/PAUSE_STEP))
 
-        partial_process_batch = partial(process_batch, lines = lines, total_batches = total_batches)
+        partial_process_batch = partial(process_batch, document_ids = document_ids, total_batches = total_batches)
 
         for s in range(super_steps):
 
@@ -69,6 +78,6 @@ def process(filename):
 
 
 filename = sys.argv[1]
-print( 'Processing %s ' % filename )
 
+print( 'Processing %s ' % filename )
 process(filename)
