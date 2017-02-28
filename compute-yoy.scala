@@ -29,15 +29,19 @@ object DataTuple {
 
 def main(): Unit ={
   val filename    = args(0)
-  val revenueData = Source.fromFile(filename)
+  val rawData = Source.fromFile(filename)
     .getLines
     .map( l => DataTuple(l) )
-    .filter(  c => c.pyRevenue > 0 & c.cyRevenue > 0 )
     .toList
 
-  println(s"Loading ${revenueData.length} items")
+  println(s"Loading ${rawData.length} documents")
 
-  val yoyRevenue = revenueData.map{ c => (c.state, c.computeYoY()) }
+  val relevantDocs = rawData
+    .filter(  c => c.pyRevenue > 0 & c.cyRevenue > 0 )
+
+  println(s"Only ${relevantDocs.length} documents that can be computed YoY.")
+
+  val yoyRevenue = relevantDocs.map{ c => (c.state, c.computeYoY()) }
 
   val totalYoYRevenue = yoyRevenue.map(_._2).sum / yoyRevenue.length
   val states = yoyRevenue
