@@ -1,6 +1,6 @@
 ## Mining IRS900 Data
 
-[IRS900](https://aws.amazon.com/public-datasets/irs-990/) contains financial information about nonprofit organizations gathered by United States Internal Revenue Service. This project aims to build a prototype for mining the dataset. Particularly, I am interested in answering the following questions for 2013:
+[IRS990](https://aws.amazon.com/public-datasets/irs-990/) contains financial information about nonprofit organizations gathered by United States Internal Revenue Service. This project aims to build a prototype for mining the dataset. Particularly, I am interested in answering the following questions for 2013:
 
 1. What was the (approximate) average Year-over-Year revenue growth nationally
 2. What was the (approximate) average Year-over-Year revenue growth by State
@@ -13,7 +13,7 @@ where Year-over-Year(YoY) revenue is computed by:
 ## Overview of the dataset
 The data is split into yearly basis. For each year, it has an index file that contains all `OBJECT_ID`s of irs900 forms submitted on that year.
 
-#### IRS900 Form
+#### IRS990 Form
 The form is served as `XML` document. It contains basic information of each organization, such as name, and state, and financial situation for that year. Details of the financial information are different for each variant of the form. The form has  5 variants, namely `990`, `990EO`, `990EZ`, `990O` and `990PF`. In this case, only `990` and `990O` are revelant to the questions as they have `TotalRevenuePriorYear` and `TotalRevenueCurrentYear`.
 
 ## System Overview
