@@ -1,4 +1,4 @@
-## Mining IRS900 Data
+## Mining IRS990 Data
 
 [IRS990](https://aws.amazon.com/public-datasets/irs-990/) contains financial information about nonprofit organizations gathered by United States Internal Revenue Service. This project aims to build a prototype for mining the dataset. Particularly, I am interested in answering the following questions for 2013:
 
