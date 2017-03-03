@@ -2,8 +2,8 @@
 
 [IRS990](https://aws.amazon.com/public-datasets/irs-990/) contains financial information about nonprofit organizations gathered by United States Internal Revenue Service. This project aims to build a prototype for mining the dataset. Particularly, I am interested in answering the following questions for 2013:
 
-1. What was the (approximate) average Year-over-Year revenue growth nationally
-2. What was the (approximate) average Year-over-Year revenue growth by State
+1. What was the (approximate) average Year-over-Year revenue growth nationally?
+2. What was the (approximate) average Year-over-Year revenue growth by State?
 
 where Year-over-Year(YoY) revenue is computed by:
 ```
